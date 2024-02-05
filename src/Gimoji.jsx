@@ -10,17 +10,24 @@ import { useState, useEffect } from "react";
 export const Gimoji = () => {
   const [dataGif, setDataGif] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [textSearch, setTextSearch] = useState("animals"); //Custom Select
+
   const apiKey = "C2lFavIwryLJIWvxkpTXEJG2uOEFPZ0X";
+  const urlApi = "https://api.giphy.com/v1/gifs";
   const limit = 16;
 
   useEffect(() => {
-    getCategories();
     getSearch();
+  }, [textSearch]);
+
+  useEffect(() => {
+    getCategories();
   }, []);
 
+  //Busca los Gifs en el endpoint cada vez que se actualiza el estado setTextSearch
   const getSearch = async () => {
     const resp = await fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=animals&limit=${limit}&offset=0`
+      `${urlApi}/search?api_key=${apiKey}&q=${textSearch}&limit=${limit}&offset=0`
     );
     const { data } = await resp.json();
     //console.log(data); //Al estar {data} desestructurado me devuelve data.data en el console
@@ -28,12 +35,19 @@ export const Gimoji = () => {
   };
 
   const getCategories = async () => {
-    const resp = await fetch(
-      `https://api.giphy.com/v1/gifs/categories?api_key=${apiKey}`
-    );
+    const resp = await fetch(`${urlApi}/categories?api_key=${apiKey}`);
     const { data } = await resp.json();
     setCategories(data);
     //console.log(data);
+  };
+
+  const onChangeData = (event) => {
+    setTextSearch(event.target.value);
+  };
+
+  const onClickSearch = (text) => {
+    //setDataText(text);
+    setTextSearch(text);
   };
 
   return (
@@ -41,10 +55,17 @@ export const Gimoji = () => {
       <div className="container-fluid mt-5">
         <div className="row justify-content-start">
           <div className="col-sm-4">
-            <CustomSelect dataCategories={categories} />
+            <CustomSelect
+              dataCategories={categories}
+              //Los callback sirven para recibir un dato y pasarlo de parametro en la funcion
+              onChangeData={(event) => onChangeData(event)}
+            />
           </div>
           <div className="col-sm-6">
-            <Search />
+            <Search
+              onChangeSearch={(event) => onChangeSearch(event)}
+              onClickSearch={(value) => onClickSearch(value)}
+            />
           </div>
         </div>
       </div>
