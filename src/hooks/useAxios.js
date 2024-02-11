@@ -1,25 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { reqAxiosHook } from "../config/axiosGiphy";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-const apiKey = import.meta.env.VITE_APIKEY_GIPHY;
+const urlApi = import.meta.env.VITE_URL_API;
+
+export const reqAxios = axios.create({
+  baseURL: urlApi,
+  timeout: 12000,
+  headers: {
+    "Content-Type": "application/json",
+    // 'token': 'kdjsfierwhjerw0893455784598',
+  },
+});
 
 export const useAxios = (url, method, params) => {
   const [dataApi, setDataApi] = useState([]);
-  const [textSearch, setTextSearch] = useState("animals"); //Custom Select
   const [isLoading, setIsLoading] = useState(true);
-  const limit = 16;
 
   useEffect(() => {
     getFetch();
   }, [url]);
 
-  //Quitamos el metodo get ya que esta llamado por defecto
+  //El metodo get ya que es llamado por defecto
   const getFetch = async () => {
-    const resp = await reqAxiosHook{
+    const resp = await reqAxios({
       url: url,
       method: method,
-      params:{params},
-    };
+      params: { params },
+    });
     const { data } = await resp.data;
     setDataApi(data);
     setIsLoading(false);
@@ -27,11 +34,14 @@ export const useAxios = (url, method, params) => {
 
   return {
     dataApi,
-    isLoading
+    isLoading,
   };
 };
 
+//Declara el method con la peticion que quiere llamar
 useAxios.defaultProps = {
   params: null,
   //method:"post"
-}
+};
+
+//Las peticiones de Axios siempre son GET por default. Tambien nos permite pasar parametros en forma de objeto
