@@ -4,10 +4,6 @@ export const usePaginate = (initialOffset, limit, initialPage) => {
   const [offset, setOffset] = useState(initialOffset);
   const [page, setPage] = useState(initialPage);
 
-  // useEffect(() => {
-  //   setPage(initialPage);
-  // }, [page]);
-
   const onNext = () => {
     setOffset((prev) => prev + limit);
     setPage(page + 1);
