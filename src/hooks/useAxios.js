@@ -8,7 +8,6 @@ export const reqAxios = axios.create({
   timeout: 12000,
   headers: {
     "Content-Type": "application/json",
-    // 'token': 'kdjsfierwhjerw0893455784598',
   },
 });
 
@@ -20,7 +19,7 @@ export const useAxios = (url, method, params) => {
     getFetch();
   }, [url]);
 
-  //El metodo get ya que es llamado por defecto
+  //El metodo get es llamado por defecto
   const getFetch = async () => {
     const resp = await reqAxios({
       url: url,
@@ -28,6 +27,7 @@ export const useAxios = (url, method, params) => {
       params: { params },
     });
     const { data } = await resp.data;
+    console.log({ data });
     setDataApi(data);
     setIsLoading(false);
   };
@@ -39,9 +39,9 @@ export const useAxios = (url, method, params) => {
 };
 
 //Declara el method con la peticion que quiere llamar
-useAxios.defaultProps = {
-  params: null,
-  //method:"post"
-};
+//useAxios.defaultProps = {
+//  params: null,
+//  //method:"post"
+//};
 
 //Las peticiones de Axios siempre son GET por default. Tambien nos permite pasar parametros en forma de objeto

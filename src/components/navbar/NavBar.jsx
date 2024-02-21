@@ -1,11 +1,10 @@
-import React from 'react'
-import { MenuItem } from './MenuItem';
+import React from "react";
+import { MenuItem } from "./MenuItem";
 
-import menuData from '../../data/Menu.json';
+import menuData from "../../data/Menu.json";
 
 export const NavBar = () => {
   return (
-    
     <nav className="navbar navbar-expand-lg bg-dark">
       <div className="container">
         <button
@@ -18,14 +17,11 @@ export const NavBar = () => {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <MenuItem itemData={menuData} />
+          </div>
         </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <MenuItem itemData={menuData} />
-          {/* <CustomSearch /> */}
-        </div>
-        
       </div>
     </nav>
-  )
-}
+  );
+};

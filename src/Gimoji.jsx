@@ -10,14 +10,15 @@ import { usePaginate } from "./hooks/usePaginate";
 const apiKey = import.meta.env.VITE_APIKEY_GIPHY;
 
 export const Gimoji = () => {
+  const pageDataInitial = 1; //Paginado inicial
   const [textSearch, setTextSearch] = useState("animals"); //Custom Select
-  const pageDataInitial = 1;
   const [pageData, setPageData] = useState(pageDataInitial);
   const limit = 16;
   const { offset, onNext, onPrev, page } = usePaginate(0, limit, pageData);
   const urlCategories = `categories?api_key=${apiKey}`;
   const urlSearch = `search?api_key=${apiKey}&q=${textSearch}&limit=${limit}&offset=${offset}`;
 
+  //usamos useAxios para el envio de datos
   const { dataApi: dataGifs, isLoading } = useAxios(urlSearch);
   const { dataApi: dataCategories } = useAxios(urlCategories);
 

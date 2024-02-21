@@ -7,7 +7,7 @@ export const usePaginate = (initialOffset, limit, initialPage) => {
   const onNext = () => {
     setOffset((prev) => prev + limit);
     setPage(page + 1);
-    console.log(offset);
+    //console.log(offset);
   };
 
   const onPrev = () => {

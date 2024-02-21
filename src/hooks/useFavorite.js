@@ -6,6 +6,7 @@ export const useFavorite = () => {
   const onClickFavorite = () => {
     setFavorite(!favorite);
   };
+
   return {
     favorite,
     onClickFavorite,

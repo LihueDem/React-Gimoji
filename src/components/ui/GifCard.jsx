@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useFavorite } from "../../hooks/useFavorite";
 import { Like } from "./Like";
 
